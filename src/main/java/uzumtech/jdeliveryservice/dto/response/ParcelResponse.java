@@ -11,7 +11,5 @@ public record ParcelResponse(
         Double weight,
         String description,
         ParcelStatus parcelStatus,
-        TariffType tariffType,
-        Long merchantId,
-        Long consumerId
+        TariffType tariffType
 ) {}

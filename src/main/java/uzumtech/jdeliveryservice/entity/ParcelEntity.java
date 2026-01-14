@@ -38,20 +38,26 @@ public class ParcelEntity {
     String description;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     ParcelStatus parcelStatus;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     TariffType tariffType;
 
-    Double latitudeFrom;
-    Double longitudeFrom;
+    Boolean active;
 
-    Double latitudeTo;
-    Double longitudeTo;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    AddressEntity address;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "merchant_id")
     MerchantEntity merchant;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "consumer_id")
+    ConsumerEntity consumer;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

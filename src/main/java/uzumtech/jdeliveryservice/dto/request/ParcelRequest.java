@@ -10,8 +10,7 @@ public record ParcelRequest(
         Integer height,
         Double weight,
         String description,
-        ParcelStatus parcelStatus,
         TariffType tariffType,
         Long merchantId,
-        Long consumerId
+        Boolean active
 ) {}
