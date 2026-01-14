@@ -12,5 +12,6 @@ public record ParcelRequest(
         String description,
         TariffType tariffType,
         Long merchantId,
-        Boolean active
+        Boolean active,
+        ParcelStatus parcelStatus
 ) {}

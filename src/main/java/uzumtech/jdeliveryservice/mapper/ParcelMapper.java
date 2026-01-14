@@ -9,6 +9,7 @@ import uzumtech.jdeliveryservice.entity.ParcelEntity;
 public interface ParcelMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", defaultValue = "true")
+    @Mapping(target = "parcelStatus", ignore = true)
     ParcelEntity toEntity(ParcelRequest request);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

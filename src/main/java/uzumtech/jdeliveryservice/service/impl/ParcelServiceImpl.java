@@ -6,14 +6,10 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
-import uzumtech.jdeliveryservice.entity.AddressEntity;
-import uzumtech.jdeliveryservice.entity.ConsumerEntity;
-import uzumtech.jdeliveryservice.entity.MerchantEntity;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
 import uzumtech.jdeliveryservice.mapper.ParcelMapper;
@@ -69,7 +65,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void updateParcelById(Long id, ParcelRequest parcelRequest) {
         var parcel = parcelRepository
                 .findById(id)
@@ -79,9 +75,8 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public Page<ParcelEntity> getActiveParcelById(Long id,Pageable pageable) {
-        return parcelRepository.findByActiveTrueAndConsumerId(id, pageable);
+    public Page<ParcelResponse> getActiveParcelById(Long id, Pageable pageable) {
+        Page<ParcelEntity> parcel = parcelRepository.findByActiveTrueAndConsumerId(id, pageable);
+        return parcel.map(parcelMapper::toResponse);
     }
-
-
 }
