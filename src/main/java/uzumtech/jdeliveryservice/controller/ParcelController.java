@@ -30,7 +30,7 @@ public class ParcelController {
     }
 
 
-    @PutMapping("/{parcelId}")
+    @PatchMapping("/{parcelId}")
     public void updateParcel(
             @PathVariable Long parcelId,
             @RequestBody @Valid ParcelRequest parcelRequest
@@ -46,7 +46,7 @@ public class ParcelController {
     }
 
     @GetMapping("/consumer/{consumerId}")
-    public Page<ParcelEntity> getActiveParcels(
+    public Page<ParcelResponse> getActiveParcels(
             @PathVariable Long consumerId,
             Pageable pageable
     ) {
