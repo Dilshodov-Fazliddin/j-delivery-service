@@ -46,6 +46,5 @@ public class ConsumerServiceImpl implements ConsumerService {
                 .orElseThrow(() -> new DataNotFoundException("Consumer not found"));
 
         consumerMapper.updateConsumerFromDto(updateRequest, entity);
-        consumerRepository.save(entity);
     }
 }
