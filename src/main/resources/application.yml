@@ -2,7 +2,7 @@ spring:
   application:
     name: j-delivery-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/gcp_service
+    url: jdbc:postgresql://localhost:5432/delivery_service
     username: postgres
     password: 1221
     driver-class-name: org.postgresql.Driver

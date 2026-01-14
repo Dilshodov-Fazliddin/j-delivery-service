@@ -3,7 +3,10 @@ package uzumtech.jdeliveryservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -30,8 +33,12 @@ public class ConsumerEntity {
     @Column(nullable = false, unique = true)
     String phoneNumber;
 
+    @Column(nullable = false)
+    Boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<AddressEntity> addresses;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

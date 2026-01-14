@@ -19,4 +19,5 @@ public class MerchantEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     String name;
+
 }

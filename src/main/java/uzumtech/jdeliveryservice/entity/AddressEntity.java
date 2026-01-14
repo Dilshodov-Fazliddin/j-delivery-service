@@ -21,4 +21,7 @@ public class AddressEntity {
     String street;
     String postalCode;
     String state;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "consumer_id")
+    ConsumerEntity consumer;
 }
