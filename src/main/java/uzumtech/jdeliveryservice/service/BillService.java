@@ -1,6 +1,4 @@
 package uzumtech.jdeliveryservice.service;
 
-public interface AddressService {
-
-
+public interface BillService {
 }

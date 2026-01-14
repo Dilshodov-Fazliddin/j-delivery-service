@@ -3,8 +3,12 @@ package uzumtech.jdeliveryservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.constant.enums.TariffType;
+
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -39,7 +43,19 @@ public class ParcelEntity {
     @Column(nullable = false)
     TariffType tariffType;
 
+    Double latitudeFrom;
+    Double longitudeFrom;
+
+    Double latitudeTo;
+    Double longitudeTo;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "merchant_id")
     MerchantEntity merchant;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
