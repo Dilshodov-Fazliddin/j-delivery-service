@@ -57,6 +57,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
+    @Transactional
     public void deleteParcelById(Long id) {
         ParcelEntity parcel = parcelRepository
                 .findById(id)
