@@ -3,6 +3,7 @@ package uzumtech.jdeliveryservice.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import uzumtech.jdeliveryservice.service.ParcelService;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ParcelServiceImpl implements ParcelService {
 
@@ -53,6 +55,8 @@ public class ParcelServiceImpl implements ParcelService {
         parcel.setParcelStatus(ParcelStatus.CREATED);
 
         var save = parcelRepository.save(parcel);
+
+        log.info("Parcel saved with id:{}", parcel.getId());
         return parcelMapper.toResponse(save);
     }
 
@@ -63,6 +67,8 @@ public class ParcelServiceImpl implements ParcelService {
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
         parcel.setActive(false);
+
+        log.info("Parcel deleted with id:{}", id);
     }
 
     @Override
@@ -73,6 +79,8 @@ public class ParcelServiceImpl implements ParcelService {
                 .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
 
         parcelMapper.updateParcelFromDto(parcelRequest,parcel);
+
+        log.info("Parcel updated with id:{}", id);
     }
 
     @Override

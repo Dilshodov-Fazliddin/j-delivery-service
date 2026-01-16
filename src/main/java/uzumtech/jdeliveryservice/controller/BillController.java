@@ -1,5 +1,6 @@
 package uzumtech.jdeliveryservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +17,7 @@ public class BillController {
     BillService billService;
 
     @GetMapping("/calculate")
-    public BillResponse calculateBill(@RequestBody BillRequest billRequest)
+    public BillResponse calculateBill(@RequestBody @Valid BillRequest billRequest)
     {
         return billService.calculateParcel(billRequest);
     }

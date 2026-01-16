@@ -1,5 +1,6 @@
 package uzumtech.jdeliveryservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,7 +21,7 @@ public class ConsumerController {
 
     @PostMapping
     public ConsumerResponse createConsumer(
-            @RequestBody ConsumerRequest consumerRequest
+            @RequestBody @Valid ConsumerRequest consumerRequest
     ) {
         return consumerService.createConsumer(consumerRequest);
     }
@@ -33,7 +34,7 @@ public class ConsumerController {
     @PatchMapping("/{id}")
     public void updateConsumer(
             @PathVariable Long id,
-            @RequestBody ConsumerUpdateRequest updateRequest
+            @RequestBody @Valid ConsumerUpdateRequest updateRequest
     ) {
         consumerService.updateConsumer(id, updateRequest);
     }
