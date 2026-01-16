@@ -20,12 +20,17 @@ public class PriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     TariffType tariffType;
+
     @Column(nullable = false)
     Double price;
+
+    @Column(nullable = false)
     Boolean active;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

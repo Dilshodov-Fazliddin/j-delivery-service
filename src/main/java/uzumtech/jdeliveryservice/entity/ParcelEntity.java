@@ -47,6 +47,18 @@ public class ParcelEntity {
 
     Boolean active;
 
+    @Column(nullable = false)
+    double latitudeFrom;
+
+    @Column(nullable = false)
+    double longitudeFrom;
+
+    @Column(nullable = false)
+    double latitudeTo;
+
+    @Column(nullable = false)
+    double longitudeTo;
+
     @ManyToOne
     @JoinColumn(name = "address_id")
     AddressEntity address;

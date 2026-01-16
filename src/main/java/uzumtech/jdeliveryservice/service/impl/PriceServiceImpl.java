@@ -3,6 +3,7 @@ package uzumtech.jdeliveryservice.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.dto.request.PriceRequest;
 import uzumtech.jdeliveryservice.dto.response.PriceResponse;
 import uzumtech.jdeliveryservice.entity.PriceEntity;
-import uzumtech.jdeliveryservice.exception.ApplicationException;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
 import uzumtech.jdeliveryservice.mapper.PriceMapper;
 import uzumtech.jdeliveryservice.repository.PriceRepository;
@@ -21,6 +21,7 @@ import uzumtech.jdeliveryservice.service.PriceService;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal=true)
 @RequiredArgsConstructor
+@Slf4j
 public class PriceServiceImpl implements PriceService {
 
     PriceRepository priceRepository;
@@ -28,13 +29,13 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public PriceResponse create(PriceRequest priceRequest) {
-
         if (priceRepository.existsByTariffType(priceRequest.tariffType())) {
             throw new IllegalStateException("Price already exists for tariff: " + priceRequest.tariffType() +" You should update Tariff plan");
         }
         var newPrice = priceMapper.toEntity(priceRequest);
         var saved = priceRepository.save(newPrice);
 
+        log.info("Saved price with id:{}", saved.getId());
         return priceMapper.toResponse(saved);
     }
 
@@ -47,6 +48,8 @@ public class PriceServiceImpl implements PriceService {
                 .orElseThrow(() -> new DataNotFoundException("Price not found with id: " + id));
 
         priceMapper.updatePriceFromDto(priceRequest,priceEntity);
+
+        log.info("Updated price with id:{}", id);
     }
 
     @Override
@@ -56,6 +59,8 @@ public class PriceServiceImpl implements PriceService {
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Price not found with id: " + id));
         priceEntity.setActive(false);
+
+        log.info("Deleted price with id:{}", id);
     }
 
     @Override

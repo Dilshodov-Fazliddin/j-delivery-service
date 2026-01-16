@@ -1,5 +1,6 @@
 package uzumtech.jdeliveryservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,26 +18,29 @@ public class AddressController {
     AddressService addressService;
 
     @PostMapping("/{id}")
-    public AddressResponse createAddress(@RequestBody AddressRequest addressRequest, @PathVariable Long id) {
+    public AddressResponse createAddress(
+            @RequestBody @Valid AddressRequest addressRequest,
+            @PathVariable @Valid Long id
+    ) {
         return addressService.createAddress(addressRequest,id);
     }
 
     @PatchMapping("/{id}")
     public void updateAddressById(
-            @PathVariable Long id,
-            @RequestBody AddressRequest addressRequest) {
+            @PathVariable @Valid Long id,
+            @RequestBody @Valid AddressRequest addressRequest) {
 
         addressService.updateAddressById(id, addressRequest);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAddressById(@PathVariable Long id) {
+    public void deleteAddressById(@PathVariable @Valid Long id) {
         addressService.deleteAddressById(id);
     }
 
     @GetMapping("/consumer/{consumerId}")
     public AddressResponse getAddressByConsumerId(
-            @PathVariable Long consumerId) {
+            @PathVariable @Valid Long consumerId) {
 
         return addressService.getAddressByConsumerId(consumerId);
     }

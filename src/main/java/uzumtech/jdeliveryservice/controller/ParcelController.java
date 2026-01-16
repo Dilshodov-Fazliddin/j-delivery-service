@@ -47,7 +47,7 @@ public class ParcelController {
 
     @GetMapping("/consumer/{consumerId}")
     public Page<ParcelResponse> getActiveParcels(
-            @PathVariable Long consumerId,
+            @PathVariable @Valid Long consumerId,
             Pageable pageable
     ) {
         return parcelService.getActiveParcelById(consumerId, pageable);

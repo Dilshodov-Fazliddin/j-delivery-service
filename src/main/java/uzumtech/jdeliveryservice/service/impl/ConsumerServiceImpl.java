@@ -3,6 +3,7 @@ package uzumtech.jdeliveryservice.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import uzumtech.jdeliveryservice.service.ConsumerService;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal=true)
+@Slf4j
 public class ConsumerServiceImpl implements ConsumerService {
     ConsumerRepository consumerRepository;
     ConsumerMapper consumerMapper;
@@ -26,6 +28,8 @@ public class ConsumerServiceImpl implements ConsumerService {
     public ConsumerResponse createConsumer(ConsumerRequest consumerRequest) {
         var entity = consumerMapper.toEntity(consumerRequest);
         var save = consumerRepository.save(entity);
+
+        log.info("Save consumer with id:{}", save.getId());
         return consumerMapper.toResponse(save);
     }
 
@@ -36,6 +40,8 @@ public class ConsumerServiceImpl implements ConsumerService {
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Consumer not found"));
         entity.setActive(false);
+
+        log.info("Delete consumer with id:{}", id);
     }
 
     @Override
@@ -47,5 +53,6 @@ public class ConsumerServiceImpl implements ConsumerService {
                 .orElseThrow(() -> new DataNotFoundException("Consumer not found"));
 
         consumerMapper.updateConsumerFromDto(updateRequest, entity);
+        log.info("Update consumer with id:{}", id);
     }
 }
