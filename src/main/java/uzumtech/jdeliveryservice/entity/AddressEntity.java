@@ -16,10 +16,15 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     Long id;
+    @Column(nullable = false)
     String country;
+    @Column(nullable = false)
     String city;
+    @Column(nullable = false)
     String street;
+    @Column(nullable = false)
     String postalCode;
+    @Column(nullable = false)
     String state;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "consumer_id")
