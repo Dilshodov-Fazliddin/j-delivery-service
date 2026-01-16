@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.dto.request.AddressRequest;
 import uzumtech.jdeliveryservice.dto.response.AddressResponse;
 import uzumtech.jdeliveryservice.entity.AddressEntity;
-import uzumtech.jdeliveryservice.entity.ConsumerEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
 import uzumtech.jdeliveryservice.mapper.AddressMapper;
 import uzumtech.jdeliveryservice.repository.AddressRepository;

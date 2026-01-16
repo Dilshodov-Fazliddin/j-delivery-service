@@ -30,6 +30,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
+    @Transactional
     public void deleteConsumer(Long id) {
         var entity = consumerRepository
                 .findById(id)

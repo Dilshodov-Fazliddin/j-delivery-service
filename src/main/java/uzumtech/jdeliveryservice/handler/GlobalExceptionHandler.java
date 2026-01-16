@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import uzumtech.jdeliveryservice.constant.enums.ErrorType;
 import uzumtech.jdeliveryservice.dto.error.ErrorDto;
 import uzumtech.jdeliveryservice.exception.ApplicationException;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
@@ -213,6 +215,15 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorDto> handleIllegalState(IllegalStateException ex) {
+        var error= ErrorDto.builder()
+                .type(INTERNAL)
+                .code(409)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.valueOf(409)).body(error);
     }
 
     @ExceptionHandler(Exception.class)
