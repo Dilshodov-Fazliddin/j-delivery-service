@@ -11,5 +11,9 @@ public record ParcelResponse(
         Double weight,
         String description,
         ParcelStatus parcelStatus,
-        TariffType tariffType
+        TariffType tariffType,
+        double latitudeFrom,
+        double longitudeFrom,
+        double latitudeTo,
+        double longitudeTo
 ) {}

@@ -13,5 +13,9 @@ public record ParcelRequest(
         TariffType tariffType,
         Long merchantId,
         Boolean active,
-        ParcelStatus parcelStatus
+        ParcelStatus parcelStatus,
+        double latitudeFrom,
+        double longitudeFrom,
+        double latitudeTo,
+        double longitudeTo
 ) {}
