@@ -30,7 +30,6 @@ public record ParcelRequest(
         @NotNull(message = "Active flag must not be null")
         Boolean active,
 
-        @NotNull(message = "Parcel status must not be null")
         ParcelStatus parcelStatus,
 
         @NotNull(message = "Latitude (from) must not be null")
