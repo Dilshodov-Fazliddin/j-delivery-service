@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
@@ -19,6 +20,7 @@ import uzumtech.jdeliveryservice.repository.ConsumerRepository;
 import uzumtech.jdeliveryservice.repository.MerchantRepository;
 import uzumtech.jdeliveryservice.repository.ParcelRepository;
 import uzumtech.jdeliveryservice.service.ParcelService;
+import uzumtech.jdeliveryservice.utils.MessageBuilder;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class ParcelServiceImpl implements ParcelService {
     ParcelMapper parcelMapper;
     AddressRepository addressRepository;
     MerchantRepository merchantRepository;
+    NotificationAdapter notificationAdapter;
 
     @Override
     @Transactional
@@ -39,11 +42,11 @@ public class ParcelServiceImpl implements ParcelService {
 
         var consumer = consumerRepository
                 .findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
+                .orElseThrow(() -> new DataNotFoundException("consumer not found"));
 
         var address = addressRepository
                 .findByConsumer_Id(consumer.getId())
-                .orElseThrow(() -> new DataNotFoundException("Consumer not found"));
+                .orElseThrow(() -> new DataNotFoundException("address not found"));
 
         var merchant = merchantRepository
                 .findById(parcelRequest.merchantId())
@@ -56,7 +59,14 @@ public class ParcelServiceImpl implements ParcelService {
 
         var save = parcelRepository.save(parcel);
 
+        var message = MessageBuilder
+                .ParcelRegistrationMessage(consumer.getFirstName(), parcel.getParcelStatus(), parcel.getId());
+
         log.info("Parcel saved with id:{}", parcel.getId());
+
+        notificationAdapter.sendNotification(message,consumer.getEmail());
+
+        log.info("Message sent to user:{}", consumer.getEmail());
         return parcelMapper.toResponse(save);
     }
 
@@ -87,5 +97,21 @@ public class ParcelServiceImpl implements ParcelService {
     public Page<ParcelResponse> getActiveParcelById(Long id, Pageable pageable) {
         Page<ParcelEntity> parcel = parcelRepository.findByActiveTrueAndConsumerId(id, pageable);
         return parcel.map(parcelMapper::toResponse);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatusOfParcel(Long id, ParcelStatus parcelStatus) {
+        ParcelEntity parcel = parcelRepository
+                .findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
+        parcel.setParcelStatus(parcelStatus);
+
+        log.info("Parcel status updated with id:{}", id);
+
+        String message = MessageBuilder.updateStatusMessage(id, parcelStatus);
+        notificationAdapter.sendNotification(message,parcel.getConsumer().getEmail());
+
+        log.info("Message sent to email with email:{}", parcel.getConsumer().getEmail());
     }
 }

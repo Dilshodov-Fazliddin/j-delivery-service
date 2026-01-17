@@ -12,7 +12,6 @@ public record ConsumerRequest(
         String email,
         @NotBlank(message = "phone number is blank, please fill this field")
         String phoneNumber,
-        @NotBlank(message = "active is blank, please fill this field")
         Boolean active
 ) {
 }

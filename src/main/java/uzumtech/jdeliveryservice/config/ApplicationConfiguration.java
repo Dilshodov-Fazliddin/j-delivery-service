@@ -23,8 +23,5 @@ public class ApplicationConfiguration {
             .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
             .build();
     }
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+
 }

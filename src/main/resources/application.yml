@@ -1,11 +1,13 @@
 spring:
   application:
     name: j-delivery-service
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/delivery_service
-    username: postgres
-    password: 1221
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,11 +24,19 @@ spring:
         generate_statistics: true
 
   flyway:
-    baseline-on-migrate: true
     enabled: true
+    baseline-on-migrate: true
     validate-on-migrate: true
     baseline-version: 0
     schemas: postgres
 
 server:
   port: 8086
+
+notification:
+  service:
+    url:
+      mail: ${NOTIFICATION_MAIL_URL}
+    merchantLogin: ${NOTIFICATION_MERCHANT_LOGIN}
+    merchantPassword: ${NOTIFICATION_MERCHANT_PASSWORD}
+    id: ${NOTIFICATION_ID}

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
@@ -36,6 +37,13 @@ public class ParcelController {
             @RequestBody @Valid ParcelRequest parcelRequest
     ) {
         parcelService.updateParcelById(parcelId, parcelRequest);
+    }
+    @PutMapping("/{parcelId}")
+    public void updateParcelStatus(
+            @PathVariable Long parcelId,
+            @RequestParam @Valid ParcelStatus parcelStatus
+    ) {
+        parcelService.updateStatusOfParcel(parcelId, parcelStatus);
     }
 
     @DeleteMapping("/{parcelId}")
