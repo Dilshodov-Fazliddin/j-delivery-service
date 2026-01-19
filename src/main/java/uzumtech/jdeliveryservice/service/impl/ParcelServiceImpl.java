@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
+import uzumtech.jdeliveryservice.constant.enums.TariffType;
+import uzumtech.jdeliveryservice.constant.enums.TariffTypeRule;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
@@ -55,7 +57,7 @@ public class ParcelServiceImpl implements ParcelService {
         parcel.setMerchant(merchant);
         parcel.setAddress(address);
         parcel.setConsumer(consumer);
-        parcel.setParcelStatus(ParcelStatus.CREATED);
+
 
         var save = parcelRepository.save(parcel);
 
