@@ -9,7 +9,12 @@ public final class MessageBuilder {
                 + "Thank you for choosing our delivery system";
     }
 
-    public static String ParcelRegistrationMessage(String firstName, ParcelStatus parcelStatus, Long id) {
-     return "Hi,"  + firstName + " your parcel with id:" + id +"\n" + parcelStatus;
+    public static String parcelRegistrationMessage(String firstName, ParcelStatus parcelStatus, Long id, Double price, Double distance,String merchantName) {
+        return "Hi " + firstName + ",\n"
+                + "Parcel ID: " + id + "\n"
+                + "Status: " + parcelStatus + "\n"
+                + "Distance: " + distance + " km\n"
+                + "Price: " + price + "\n"
+                + "From: " + merchantName;
     }
 }

@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
-import uzumtech.jdeliveryservice.constant.enums.TariffType;
-import uzumtech.jdeliveryservice.constant.enums.TariffTypeRule;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
+import uzumtech.jdeliveryservice.mapper.BillMapper;
 import uzumtech.jdeliveryservice.mapper.ParcelMapper;
 import uzumtech.jdeliveryservice.repository.AddressRepository;
 import uzumtech.jdeliveryservice.repository.ConsumerRepository;
 import uzumtech.jdeliveryservice.repository.MerchantRepository;
 import uzumtech.jdeliveryservice.repository.ParcelRepository;
+import uzumtech.jdeliveryservice.service.BillService;
 import uzumtech.jdeliveryservice.service.ParcelService;
 import uzumtech.jdeliveryservice.utils.MessageBuilder;
 
@@ -36,12 +36,13 @@ public class ParcelServiceImpl implements ParcelService {
     AddressRepository addressRepository;
     MerchantRepository merchantRepository;
     NotificationAdapter notificationAdapter;
+    BillService billService;
+    BillMapper billMapper;
 
     @Override
     @Transactional
     public ParcelResponse createParcel(Long id,ParcelRequest parcelRequest) {
         var parcel = parcelMapper.toEntity(parcelRequest);
-
         var consumer = consumerRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("consumer not found"));
@@ -54,15 +55,28 @@ public class ParcelServiceImpl implements ParcelService {
                 .findById(parcelRequest.merchantId())
                 .orElseThrow(() -> new DataNotFoundException("Merchant not found"));
 
+        var billRequest = billMapper.toBillRequest(parcelRequest);
+
+        var billResponse = billService.calculateParcel(billRequest);
+
         parcel.setMerchant(merchant);
         parcel.setAddress(address);
         parcel.setConsumer(consumer);
 
+        parcel.setPrice(billResponse.price());
+        parcel.setDistance(billResponse.distance());
 
         var save = parcelRepository.save(parcel);
 
         var message = MessageBuilder
-                .ParcelRegistrationMessage(consumer.getFirstName(), parcel.getParcelStatus(), parcel.getId());
+                .parcelRegistrationMessage(
+                        consumer.getFirstName(),
+                        parcel.getParcelStatus(),
+                        parcel.getId(),
+                        parcel.getPrice(),
+                        parcel.getDistance(),
+                        merchant.getName()
+                );
 
         log.info("Parcel saved with id:{}", parcel.getId());
 

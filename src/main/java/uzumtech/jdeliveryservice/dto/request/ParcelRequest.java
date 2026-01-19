@@ -42,5 +42,9 @@ public record ParcelRequest(
         Double latitudeTo,
 
         @NotNull(message = "Longitude (to) must not be null")
-        Double longitudeTo
+        Double longitudeTo,
+
+        Double price,
+
+        Double distance
 ) {}

@@ -10,7 +10,7 @@ import uzumtech.jdeliveryservice.entity.PriceEntity;
 @Mapper(componentModel = "spring")
 public interface PriceMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "active", defaultValue = "true",ignore = true)
+    @Mapping(target = "active", constant = "true")
     PriceEntity toEntity(PriceRequest request);
     PriceResponse toResponse(PriceEntity price);
 

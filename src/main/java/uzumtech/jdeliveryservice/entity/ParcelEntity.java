@@ -48,6 +48,12 @@ public class ParcelEntity {
     Boolean active;
 
     @Column(nullable = false)
+    Double price;
+
+    @Column(nullable = false)
+    Double distance;
+
+    @Column(nullable = false)
     double latitudeFrom;
 
     @Column(nullable = false)
