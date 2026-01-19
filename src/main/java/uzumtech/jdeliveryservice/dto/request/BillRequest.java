@@ -13,7 +13,7 @@ public record BillRequest(
         int height,
         @NotNull(message = "Weight is blank, please fill this field")
         int weight,
-        @NotBlank(message = "Tariff type is blank, please fill this field")
+        @NotNull(message = "Tariff type is blank, please fill this field")
         TariffType tariffType,
         @NotNull(message = "Latitude from is blank, please fill this field")
         double latitudeFrom,
