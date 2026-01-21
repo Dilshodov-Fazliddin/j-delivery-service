@@ -2,6 +2,7 @@ package uzumtech.jdeliveryservice.mapper;
 
 import org.mapstruct.*;
 import uzumtech.jdeliveryservice.dto.request.AddressRequest;
+import uzumtech.jdeliveryservice.dto.request.AddressUpdateRequest;
 import uzumtech.jdeliveryservice.dto.request.ConsumerUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.AddressResponse;
 import uzumtech.jdeliveryservice.entity.AddressEntity;
@@ -13,7 +14,7 @@ public interface AddressMapper {
     AddressEntity toEntity(AddressRequest address);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateAddressFromDto(AddressRequest dto, @MappingTarget AddressEntity entity);
+    void updateAddressFromDto(AddressUpdateRequest dto, @MappingTarget AddressEntity entity);
 
     AddressResponse toResponse(AddressEntity address);
 }

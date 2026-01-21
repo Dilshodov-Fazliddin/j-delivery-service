@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.dto.request.AddressRequest;
+import uzumtech.jdeliveryservice.dto.request.AddressUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.AddressResponse;
 import uzumtech.jdeliveryservice.entity.AddressEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
@@ -41,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateAddressById(Long id, AddressRequest addressRequest) {
+    public void updateAddressById(Long id, AddressUpdateRequest addressRequest) {
         AddressEntity address = addressRepository
                 .findById(id)
                 .orElseThrow(() ->

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
+import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.service.ParcelService;
@@ -34,7 +35,7 @@ public class ParcelController {
     @PatchMapping("/{parcelId}")
     public void updateParcel(
             @PathVariable Long parcelId,
-            @RequestBody @Valid ParcelRequest parcelRequest
+            @RequestBody @Valid ParcelUpdateRequest parcelRequest
     ) {
         parcelService.updateParcelById(parcelId, parcelRequest);
     }

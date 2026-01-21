@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.dto.request.PriceRequest;
+import uzumtech.jdeliveryservice.dto.request.PriceUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.PriceResponse;
 import uzumtech.jdeliveryservice.entity.PriceEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
@@ -42,7 +43,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateById(Long id, PriceRequest priceRequest) {
+    public void updateById(Long id, PriceUpdateRequest priceRequest) {
         var priceEntity = priceRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Price not found with id: " + id));

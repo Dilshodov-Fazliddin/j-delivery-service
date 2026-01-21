@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 import uzumtech.jdeliveryservice.dto.request.AddressRequest;
+import uzumtech.jdeliveryservice.dto.request.AddressUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.AddressResponse;
 import uzumtech.jdeliveryservice.service.AddressService;
 
@@ -28,7 +29,7 @@ public class AddressController {
     @PatchMapping("/{id}")
     public void updateAddressById(
             @PathVariable @Valid Long id,
-            @RequestBody @Valid AddressRequest addressRequest) {
+            @RequestBody @Valid AddressUpdateRequest addressRequest) {
 
         addressService.updateAddressById(id, addressRequest);
     }

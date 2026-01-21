@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import uzumtech.jdeliveryservice.dto.request.PriceRequest;
+import uzumtech.jdeliveryservice.dto.request.PriceUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.PriceResponse;
 import uzumtech.jdeliveryservice.service.PriceService;
 
@@ -24,7 +25,7 @@ public class PriceController {
     @PutMapping("/{id}")
     public void updateById(
             @PathVariable Long id,
-            @RequestBody @Valid PriceRequest priceRequest
+            @RequestBody @Valid PriceUpdateRequest priceRequest
     ) {
         priceService.updateById(id, priceRequest);
     }
