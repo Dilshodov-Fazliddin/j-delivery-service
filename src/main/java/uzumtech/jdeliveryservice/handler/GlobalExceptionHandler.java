@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import uzumtech.jdeliveryservice.constant.enums.ErrorType;
 import uzumtech.jdeliveryservice.dto.error.ErrorDto;
 import uzumtech.jdeliveryservice.exception.ApplicationException;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;

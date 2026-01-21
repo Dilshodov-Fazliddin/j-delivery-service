@@ -5,6 +5,7 @@ import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.constant.enums.TariffType;
 import uzumtech.jdeliveryservice.dto.request.BillRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
+import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.BillResponse;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
@@ -19,7 +20,7 @@ public interface ParcelMapper {
     ParcelEntity toEntity(ParcelRequest request);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateParcelFromDto(ParcelRequest dto, @MappingTarget ParcelEntity entity);
+    void updateParcelFromDto(ParcelUpdateRequest dto, @MappingTarget ParcelEntity entity);
 
     ParcelResponse toResponse(ParcelEntity parcel);
 

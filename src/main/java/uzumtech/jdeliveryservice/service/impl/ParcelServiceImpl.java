@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
+import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
@@ -99,7 +100,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     @Transactional
-    public void updateParcelById(Long id, ParcelRequest parcelRequest) {
+    public void updateParcelById(Long id, ParcelUpdateRequest parcelRequest) {
         var parcel = parcelRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
