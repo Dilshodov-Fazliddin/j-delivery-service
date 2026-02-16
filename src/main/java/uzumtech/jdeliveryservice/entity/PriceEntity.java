@@ -3,9 +3,11 @@ package uzumtech.jdeliveryservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import uzumtech.jdeliveryservice.constant.enums.TariffType;
+import uzumtech.jdeliveryservice.entity.base.BaseEntity;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PriceEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+public class PriceEntity extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -31,9 +30,4 @@ public class PriceEntity {
     @Column(nullable = false)
     Boolean active;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

@@ -8,6 +8,7 @@ import uzumtech.jdeliveryservice.constant.Constant;
 import uzumtech.jdeliveryservice.constant.enums.TariffTypeRule;
 import uzumtech.jdeliveryservice.dto.request.BillRequest;
 import uzumtech.jdeliveryservice.dto.response.BillResponse;
+import uzumtech.jdeliveryservice.mapper.BillMapper;
 import uzumtech.jdeliveryservice.repository.PriceRepository;
 import uzumtech.jdeliveryservice.service.BillService;
 import uzumtech.jdeliveryservice.utils.GeoUtils;
@@ -28,12 +29,11 @@ public class BillServiceImpl implements BillService {
             throw new IllegalArgumentException("Max size: " + rule.getMaxSize() +", max weight: " + rule.getMaxWeight());
         }
 
-        double distance = Math.max(
-                GeoUtils.distanceInKm(
-                        request.latitudeFrom(),
-                        request.longitudeFrom(),
-                        request.latitudeTo(),
-                        request.longitudeTo()) - Constant.FREE_DISTANCE,0);
+        double distance = GeoUtils.distanceKmByRoad(
+                request.latitudeFrom(),
+                request.longitudeFrom(),
+                request.latitudeTo(),
+                request.longitudeTo());
 
         double finalPrice = Math.round(tariffPrice.getPrice() + distance * rule.getPricePerKm());
 

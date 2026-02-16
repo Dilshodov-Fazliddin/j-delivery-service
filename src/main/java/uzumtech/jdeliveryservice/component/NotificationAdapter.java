@@ -28,8 +28,7 @@ public class NotificationAdapter {
 
 
     public void sendNotification(String message,String email) {
-
-        var res=restClient.post()
+        var result = restClient.post()
                 .uri(url + id )
                 .headers(headers->{
                     headers.setBasicAuth(merchantLogin,merchantPassword);
@@ -39,6 +38,6 @@ public class NotificationAdapter {
                 .retrieve()
                 .toBodilessEntity();
 
-        log.info("{}", res);
+        log.info("{}", result);
     }
 }

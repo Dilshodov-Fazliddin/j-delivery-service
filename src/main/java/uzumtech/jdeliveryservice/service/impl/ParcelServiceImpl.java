@@ -43,7 +43,9 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     @Transactional
     public ParcelResponse createParcel(Long id,ParcelRequest parcelRequest) {
+
         var parcel = parcelMapper.toEntity(parcelRequest);
+
         var consumer = consumerRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("consumer not found"));

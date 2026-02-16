@@ -26,6 +26,7 @@ public class AddressServiceImpl implements AddressService {
     AddressRepository addressRepository;
     AddressMapper addressMapper;
     ConsumerRepository consumerRepository;
+
     @Override
     public AddressResponse createAddress(AddressRequest addressRequest,Long consumerId) {
         var consumer = consumerRepository
@@ -36,7 +37,9 @@ public class AddressServiceImpl implements AddressService {
         entity.setConsumer(consumer);
 
         var save = addressRepository.save(entity);
+
         log.info("save address {}", save.getId());
+
         return addressMapper.toResponse(save);
     }
 
