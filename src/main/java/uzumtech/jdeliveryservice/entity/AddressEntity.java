@@ -3,19 +3,17 @@ package uzumtech.jdeliveryservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+import uzumtech.jdeliveryservice.entity.base.BaseEntity;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AddressEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    Long id;
+public class AddressEntity extends BaseEntity {
     @Column(nullable = false)
     String country;
     @Column(nullable = false)
