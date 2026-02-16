@@ -28,10 +28,10 @@ spring:
     baseline-on-migrate: true
     validate-on-migrate: true
     baseline-version: 0
-    schemas: postgres
+    schemas: ${DB_SCHEMA}
 
 server:
-  port: 8086
+  port: ${SERVER_PORT:8086}
 
 notification:
   service:
