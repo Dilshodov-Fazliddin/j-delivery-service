@@ -39,4 +39,3 @@ notification:
       mail: ${NOTIFICATION_MAIL_URL}
     merchantLogin: ${NOTIFICATION_MERCHANT_LOGIN}
     merchantPassword: ${NOTIFICATION_MERCHANT_PASSWORD}
-    id: ${NOTIFICATION_ID}
