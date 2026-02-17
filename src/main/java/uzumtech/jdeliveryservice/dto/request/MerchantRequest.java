@@ -2,6 +2,7 @@ package uzumtech.jdeliveryservice.dto.request;
 
 public record MerchantRequest(
         String name,
-        Long id
+        String login,
+        String password
 ) {
 }
