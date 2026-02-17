@@ -4,7 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record NotificationSmsRequest(
-        String content,
-        String email
+        Receiver receiver,
+        String type,
+        String text
 ) {
 }
