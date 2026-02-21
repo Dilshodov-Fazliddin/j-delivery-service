@@ -10,9 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
+import uzumtech.jdeliveryservice.dto.request.BillRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
+import uzumtech.jdeliveryservice.dto.response.BillResponse;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
+import uzumtech.jdeliveryservice.entity.AddressEntity;
+import uzumtech.jdeliveryservice.entity.ConsumerEntity;
+import uzumtech.jdeliveryservice.entity.MerchantEntity;
 import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.exception.DataNotFoundException;
 import uzumtech.jdeliveryservice.mapper.BillMapper;
@@ -43,9 +48,6 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     @Transactional
     public ParcelResponse createParcel(Long id,ParcelRequest parcelRequest) {
-
-        var parcel = parcelMapper.toEntity(parcelRequest);
-
         var consumer = consumerRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("consumer not found"));
@@ -58,41 +60,23 @@ public class ParcelServiceImpl implements ParcelService {
                 .findById(parcelRequest.merchantId())
                 .orElseThrow(() -> new DataNotFoundException("Merchant not found"));
 
-        var billRequest = billMapper.toBillRequest(parcelRequest);
+        var billResponse = billService.calculateParcel(billMapper.toBillRequest(parcelRequest));
 
-        var billResponse = billService.calculateParcel(billRequest);
-
-        parcel.setMerchant(merchant);
-        parcel.setAddress(address);
-        parcel.setConsumer(consumer);
-
-        parcel.setPrice(billResponse.price());
-        parcel.setDistance(billResponse.distance());
+        var parcel = buildParcel(parcelRequest, merchant, address, consumer, billResponse);
 
         var save = parcelRepository.save(parcel);
 
-        var message = MessageBuilder
-                .parcelRegistrationMessage(
-                        consumer.getFirstName(),
-                        parcel.getParcelStatus(),
-                        parcel.getId(),
-                        parcel.getPrice(),
-                        parcel.getDistance(),
-                        merchant.getName()
-                );
-
         log.info("Parcel saved with id:{}", parcel.getId());
 
-        notificationAdapter.sendNotification(message,consumer.getEmail());
+        sendNotification(consumer,parcel,merchant);
 
-        log.info("Message sent to user:{}", consumer.getEmail());
         return parcelMapper.toResponse(save);
     }
 
     @Override
     @Transactional
     public void deleteParcelById(Long id) {
-        ParcelEntity parcel = parcelRepository
+        var parcel = parcelRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
         parcel.setActive(false);
@@ -121,7 +105,7 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     @Transactional
     public void updateStatusOfParcel(Long id, ParcelStatus parcelStatus) {
-        ParcelEntity parcel = parcelRepository
+        var parcel = parcelRepository
                 .findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Parcel not found"));
         parcel.setParcelStatus(parcelStatus);
@@ -132,5 +116,36 @@ public class ParcelServiceImpl implements ParcelService {
         notificationAdapter.sendNotification(message,parcel.getConsumer().getEmail());
 
         log.info("Message sent to email with email:{}", parcel.getConsumer().getEmail());
+    }
+
+
+
+    private ParcelEntity buildParcel(ParcelRequest parcelRequest, MerchantEntity merchant, AddressEntity address, ConsumerEntity consumer, BillResponse billResponse){
+        var parcel = parcelMapper.toEntity(parcelRequest);
+        parcel.setMerchant(merchant);
+        parcel.setAddress(address);
+        parcel.setConsumer(consumer);
+
+        parcel.setPrice(billResponse.price());
+        parcel.setDistance(billResponse.distance());
+
+        return parcel;
+    }
+
+
+    private void sendNotification(ConsumerEntity consumer,ParcelEntity parcel,MerchantEntity merchant){
+        var message = MessageBuilder
+                .parcelRegistrationMessage(
+                        consumer.getFirstName(),
+                        parcel.getParcelStatus(),
+                        parcel.getId(),
+                        parcel.getPrice(),
+                        parcel.getDistance(),
+                        merchant.getName()
+                );
+
+        notificationAdapter.sendNotification(message,consumer.getEmail());
+
+        log.info("Message sent to user:{}", consumer.getEmail());
     }
 }
