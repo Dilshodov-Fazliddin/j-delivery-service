@@ -1,7 +1,5 @@
 package uzumtech.jdeliveryservice.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.constant.enums.TariffType;
 

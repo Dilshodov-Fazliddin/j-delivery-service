@@ -1,11 +1,9 @@
 package uzumtech.jdeliveryservice.mapper;
 
 import org.mapstruct.*;
-import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.request.PriceRequest;
 import uzumtech.jdeliveryservice.dto.request.PriceUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.PriceResponse;
-import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.entity.PriceEntity;
 
 @Mapper(componentModel = "spring")

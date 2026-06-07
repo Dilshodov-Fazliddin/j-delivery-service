@@ -27,14 +27,14 @@ public class NotificationAdapter {
     String url;
 
 
-    public void sendNotification(String message,String email) {
+    public void sendNotification(String message, String email) {
         var result = restClient.post()
                 .uri(url)
-                .headers(headers->{
-                    headers.setBasicAuth(merchantLogin,merchantPassword);
+                .headers(headers -> {
+                    headers.setBasicAuth(merchantLogin, merchantPassword);
                     headers.setContentType(MediaType.APPLICATION_JSON);
                 })
-                .body(new NotificationSmsRequest(new Receiver(email),"EMAIL",message))
+                .body(new NotificationSmsRequest(new Receiver(email), "EMAIL", message))
                 .retrieve()
                 .toBodilessEntity();
 

@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uzumtech.jdeliveryservice.dto.request.ConsumerRequest;
 import uzumtech.jdeliveryservice.dto.request.ConsumerUpdateRequest;

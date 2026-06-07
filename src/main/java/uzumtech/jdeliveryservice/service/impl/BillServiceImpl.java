@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import uzumtech.jdeliveryservice.constant.Constant;
 import uzumtech.jdeliveryservice.constant.enums.TariffTypeRule;
 import uzumtech.jdeliveryservice.dto.request.BillRequest;
 import uzumtech.jdeliveryservice.dto.response.BillResponse;

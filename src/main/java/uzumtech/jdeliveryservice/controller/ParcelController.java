@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.ParcelResponse;
-import uzumtech.jdeliveryservice.entity.ParcelEntity;
 import uzumtech.jdeliveryservice.service.ParcelService;
 
 @RestController

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uzumtech.jdeliveryservice.component.NotificationAdapter;
 import uzumtech.jdeliveryservice.constant.enums.ParcelStatus;
-import uzumtech.jdeliveryservice.dto.request.BillRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelRequest;
 import uzumtech.jdeliveryservice.dto.request.ParcelUpdateRequest;
 import uzumtech.jdeliveryservice.dto.response.BillResponse;
